@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.7.3</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.plat</groupId>
+	<artifactId>web</artifactId>
+	<version>4.0.0-SNAPSHOT</version>
+	<name>web</name>
+	<description>Demo project for Spring Boot</description>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<version>RELEASE</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<docker.repostory>192.168.202.129:8082</docker.repostory>
+	</properties>
+
+
+	<!--指定仓库地址推送地址-->
+	<distributionManagement>
+		<snapshotRepository>
+			<!--此名称要和.m2/settings.xml中设置的ID一致-->
+			<id>nexus-registry</id>
+			<url>http://192.168.202.129:8081/repository/maven-snapshots/</url>
+		</snapshotRepository>
+
+		<repository>
+			<!--此名称要和.m2/settings.xml中设置的ID一致-->
+			<id>nexus-registry</id>
+			<url>http://192.168.202.129:8081/repository/maven-releases/</url>
+		</repository>
+	</distributionManagement>
+
+	<!--指定仓库地址拉取地址-->
+	<repositories>
+		<repository>
+			<id>web-public</id>
+			<name>public</name>
+			<url>http://192.168.202.129:8081/repository/maven-public/</url>
+		</repository>
+
+		<repository>
+			<id>web-snapshots</id>
+			<name>snapshots</name>
+			<url>http://192.168.202.129:8081/repository/maven-snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<image>
+						<!--配置镜像名称-->
+						<name>${docker.repostory}/${project.name}</name>
+						<!--镜像打包完成后自动推送到镜像仓库-->
+						<publish>true</publish>
+					</image>
+					<docker>
+						<!--Docker远程管理地址-->
+						<host>http://192.168.202.129:2375</host>
+						<!--不使用TLS访问-->
+						<tlsVerify>false</tlsVerify>
+						<!--Docker推送镜像仓库配置-->
+						<publishRegistry>
+							<!--推送镜像仓库用户名-->
+							<username>admin</username>
+							<!--推送镜像仓库密码-->
+							<password>admin</password>
+							<!--推送镜像仓库地址-->
+							<url>http://${docker.repostory}</url>
+						</publishRegistry>
+					</docker>
+				</configuration>
+
+			</plugin>
+
+		</plugins>
+	</build>
+</project>
