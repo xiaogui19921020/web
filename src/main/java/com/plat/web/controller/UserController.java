@@ -11,4 +11,9 @@ public class UserController {
   public Object info() {
     return "ok";
   }
+
+  @GetMapping("/login")
+  public Object login() {
+    return "ok";
+  }
 }
