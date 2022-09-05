@@ -110,6 +110,15 @@
 						</publishRegistry>
 					</docker>
 				</configuration>
+				<executions>
+					<execution>
+						<id>docker-exec</id>
+						<phase>install</phase>
+						<goals>
+							<goal>build-image</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 			<plugin>
