@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.plat</groupId>
 	<artifactId>web</artifactId>
-	<version>4.0.0-SNAPSHOT</version>
+	<version>6.0.0-SNAPSHOT</version>
 	<name>web</name>
 	<description>Demo project for Spring Boot</description>
 	<dependencies>
@@ -35,6 +35,13 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<docker.repostory>192.168.202.129:8082</docker.repostory>
+
+		<docker.plugin.version>0.32.0</docker.plugin.version>
+		<docker.host>http://192.168.202.129:2375</docker.host>
+		<docker.registry>192.168.202.129:8082</docker.registry>
+		<docker.namespace>library</docker.namespace>
+		<docker.username>admin</docker.username>
+		<docker.password>admin</docker.password>
 	</properties>
 
 
@@ -79,32 +86,59 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+
 				<configuration>
 					<image>
 						<!--配置镜像名称-->
-						<name>${docker.repostory}/${project.name}</name>
+						<name>${docker.repostory}/boot/${project.name}:${project.version}</name>
 						<!--镜像打包完成后自动推送到镜像仓库-->
 						<publish>true</publish>
 					</image>
 					<docker>
 						<!--Docker远程管理地址-->
-						<host>http://192.168.202.129:2375</host>
+						<host>${docker.host}</host>
 						<!--不使用TLS访问-->
 						<tlsVerify>false</tlsVerify>
 						<!--Docker推送镜像仓库配置-->
 						<publishRegistry>
 							<!--推送镜像仓库用户名-->
-							<username>admin</username>
+							<username>${docker.username}</username>
 							<!--推送镜像仓库密码-->
-							<password>admin</password>
+							<password>${docker.password}</password>
 							<!--推送镜像仓库地址-->
-							<url>http://${docker.repostory}</url>
+							<url>${docker.registry}</url>
 						</publishRegistry>
 					</docker>
 				</configuration>
-
 			</plugin>
 
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>${docker.plugin.version}</version>
+				<configuration>
+					<!-- Docker Remote Api-->
+					<dockerHost>${docker.host}</dockerHost>
+					<!-- Docker 镜像私服-->
+					<registry>${docker.registry}</registry>
+					<!-- 认证信息-->
+					<authConfig>
+						<push>
+							<username>${docker.username}</username>
+							<password>${docker.password}</password>
+						</push>
+					</authConfig>
+					<images>
+						<image>
+							<!-- 镜像名称： 172.17.0.111/library/pig-gateway:2.6.3-->
+							<name>${docker.registry}/fabric8/${project.name}:${project.version}</name>
+							<build>
+								<dockerFile>${project.basedir}/Dockerfile</dockerFile>
+							</build>
+						</image>
+					</images>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>
