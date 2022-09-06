@@ -86,26 +86,26 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-
-				<configuration>
+				<!-- 发现io.fabric8更好用，就换了一个 -->
+				<!--<configuration>
 					<image>
-						<!--配置镜像名称-->
+						&lt;!&ndash;配置镜像名称&ndash;&gt;
 						<name>${docker.repostory}/boot/${project.name}:${project.version}</name>
-						<!--镜像打包完成后自动推送到镜像仓库-->
+						&lt;!&ndash;镜像打包完成后自动推送到镜像仓库&ndash;&gt;
 						<publish>true</publish>
 					</image>
 					<docker>
-						<!--Docker远程管理地址-->
+						&lt;!&ndash;Docker远程管理地址&ndash;&gt;
 						<host>${docker.host}</host>
-						<!--不使用TLS访问-->
+						&lt;!&ndash;不使用TLS访问&ndash;&gt;
 						<tlsVerify>false</tlsVerify>
-						<!--Docker推送镜像仓库配置-->
+						&lt;!&ndash;Docker推送镜像仓库配置&ndash;&gt;
 						<publishRegistry>
-							<!--推送镜像仓库用户名-->
+							&lt;!&ndash;推送镜像仓库用户名&ndash;&gt;
 							<username>${docker.username}</username>
-							<!--推送镜像仓库密码-->
+							&lt;!&ndash;推送镜像仓库密码&ndash;&gt;
 							<password>${docker.password}</password>
-							<!--推送镜像仓库地址-->
+							&lt;!&ndash;推送镜像仓库地址&ndash;&gt;
 							<url>${docker.registry}</url>
 						</publishRegistry>
 					</docker>
@@ -118,7 +118,7 @@
 							<goal>build-image</goal>
 						</goals>
 					</execution>
-				</executions>
+				</executions>-->
 			</plugin>
 
 			<plugin>
@@ -139,8 +139,15 @@
 					</authConfig>
 					<images>
 						<image>
-							<!-- 镜像名称： 172.17.0.111/library/pig-gateway:2.6.3-->
+							<!-- 镜像名称： 192.168.202.129:8082/fabric8/web:8.0.0-SNAPSHOT-->
 							<name>${docker.registry}/fabric8/${project.name}:${project.version}</name>
+							<build>
+								<dockerFile>${project.basedir}/Dockerfile</dockerFile>
+							</build>
+						</image>
+						<image>
+							<!-- 镜像名称： 192.168.202.129:8082/fabric8/web:latest-->
+							<name>${docker.registry}/fabric8/${project.name}</name>
 							<build>
 								<dockerFile>${project.basedir}/Dockerfile</dockerFile>
 							</build>
