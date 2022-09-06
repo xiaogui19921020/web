@@ -19,6 +19,6 @@ public class UserController {
 
   @GetMapping("/register")
   public Object register() {
-    return "register,ok";
+    return "register,ok,001";
   }
 }
