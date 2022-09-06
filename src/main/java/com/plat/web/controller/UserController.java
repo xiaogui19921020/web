@@ -16,4 +16,9 @@ public class UserController {
   public Object login() {
     return "ok";
   }
+
+  @GetMapping("/register")
+  public Object register() {
+    return "register,ok";
+  }
 }
