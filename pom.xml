@@ -34,11 +34,11 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<docker.repostory>192.168.202.129:8082</docker.repostory>
+		<docker.repostory>192.168.202.130:8082</docker.repostory>
 
 		<docker.plugin.version>0.32.0</docker.plugin.version>
-		<docker.host>http://192.168.202.129:2375</docker.host>
-		<docker.registry>192.168.202.129:8082</docker.registry>
+		<docker.host>http://192.168.202.130:2375</docker.host>
+		<docker.registry>192.168.202.130:8082</docker.registry>
 		<docker.namespace>library</docker.namespace>
 		<docker.username>admin</docker.username>
 		<docker.password>admin</docker.password>
@@ -50,13 +50,13 @@
 		<snapshotRepository>
 			<!--此名称要和.m2/settings.xml中设置的ID一致-->
 			<id>nexus-registry</id>
-			<url>http://192.168.202.129:8081/repository/maven-snapshots/</url>
+			<url>http://192.168.202.130:8081/repository/maven-snapshots/</url>
 		</snapshotRepository>
 
 		<repository>
 			<!--此名称要和.m2/settings.xml中设置的ID一致-->
 			<id>nexus-registry</id>
-			<url>http://192.168.202.129:8081/repository/maven-releases/</url>
+			<url>http://192.168.202.130:8081/repository/maven-releases/</url>
 		</repository>
 	</distributionManagement>
 
@@ -65,13 +65,13 @@
 		<repository>
 			<id>web-public</id>
 			<name>public</name>
-			<url>http://192.168.202.129:8081/repository/maven-public/</url>
+			<url>http://192.168.202.130:8081/repository/maven-public/</url>
 		</repository>
 
 		<repository>
 			<id>web-snapshots</id>
 			<name>snapshots</name>
-			<url>http://192.168.202.129:8081/repository/maven-snapshots/</url>
+			<url>http://192.168.202.130:8081/repository/maven-snapshots/</url>
 			<snapshots>
 				<enabled>true</enabled>
 				<updatePolicy>always</updatePolicy>
@@ -139,14 +139,14 @@
 					</authConfig>
 					<images>
 						<image>
-							<!-- 镜像名称： 192.168.202.129:8082/fabric8/web:8.0.0-SNAPSHOT-->
+							<!-- 镜像名称： 192.168.202.130:8082/fabric8/web:8.0.0-SNAPSHOT-->
 							<name>${docker.registry}/fabric8/${project.name}:${project.version}</name>
 							<build>
 								<dockerFile>${project.basedir}/Dockerfile</dockerFile>
 							</build>
 						</image>
 						<image>
-							<!-- 镜像名称： 192.168.202.129:8082/fabric8/web:latest-->
+							<!-- 镜像名称： 192.168.202.130:8082/fabric8/web:latest-->
 							<name>${docker.registry}/fabric8/${project.name}</name>
 							<build>
 								<dockerFile>${project.basedir}/Dockerfile</dockerFile>
