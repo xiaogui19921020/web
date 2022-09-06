@@ -1,15 +1,13 @@
 FROM moxm/java:1.8-full
 
-RUN mkdir -p /web
+RUN mkdir -p /java
 
-WORKDIR /web
+WORKDIR /java
 
-ARG JAR_FILE=target/web.jar
-
-COPY ${JAR_FILE} app.jar
+COPY target/*.jar app.jar
 
 EXPOSE 8080
 
 ENV TZ=Asia/Shanghai JAVA_OPTS="-Xms128m -Xmx256m -Djava.security.egd=file:/dev/./urandom"
 
-CMD sleep 30; java -jar app.jar $JAVA_OPTS
+CMD sleep 5; java -jar app.jar $JAVA_OPTS
