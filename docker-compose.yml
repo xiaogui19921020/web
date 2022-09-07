@@ -1,0 +1,10 @@
+version: '3'
+services:
+  pig-gateway:
+    build:
+      context: ./
+    ports:
+      - :8080
+    container_name: web
+    hostname: web
+    image: web-local
