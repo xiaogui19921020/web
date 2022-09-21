@@ -34,12 +34,10 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<docker.repostory>192.168.202.130:8082</docker.repostory>
-
 		<docker.plugin.version>0.32.0</docker.plugin.version>
 		<docker.host>http://192.168.202.130:2375</docker.host>
 		<docker.registry>192.168.202.130:8082</docker.registry>
-		<docker.namespace>library</docker.namespace>
+		<docker.namespace>fabric8</docker.namespace>
 		<docker.username>admin</docker.username>
 		<docker.password>admin</docker.password>
 	</properties>
@@ -90,7 +88,7 @@
 				<!--<configuration>
 					<image>
 						&lt;!&ndash;配置镜像名称&ndash;&gt;
-						<name>${docker.repostory}/boot/${project.name}:${project.version}</name>
+						<name>${docker.registry}/boot/${project.name}:${project.version}</name>
 						&lt;!&ndash;镜像打包完成后自动推送到镜像仓库&ndash;&gt;
 						<publish>true</publish>
 					</image>
@@ -140,14 +138,14 @@
 					<images>
 						<image>
 							<!-- 镜像名称： 192.168.202.130:8082/fabric8/web:8.0.0-SNAPSHOT-->
-							<name>${docker.registry}/fabric8/${project.name}:${project.version}</name>
+							<name>${docker.registry}/${docker.namespace}/${project.name}:${project.version}</name>
 							<build>
 								<dockerFile>${project.basedir}/Dockerfile</dockerFile>
 							</build>
 						</image>
 						<image>
 							<!-- 镜像名称： 192.168.202.130:8082/fabric8/web:latest-->
-							<name>${docker.registry}/fabric8/${project.name}</name>
+							<name>${docker.registry}/${docker.namespace}/${project.name}</name>
 							<build>
 								<dockerFile>${project.basedir}/Dockerfile</dockerFile>
 							</build>
